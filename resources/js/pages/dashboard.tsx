@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
-import { Button } from '@/components/ui/button';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
+import { TableDashboard } from './auth/table-dashboard';
 
 export default function Dashboard() {
     return (
@@ -19,11 +19,11 @@ export default function Dashboard() {
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                <h1 className='font-bold'>Pelanggan Terkini</h1>
+                <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                    <TableDashboard />
                 </div>
             </div >
-            <Button>YAHA</Button>
         </>
     );
 }
