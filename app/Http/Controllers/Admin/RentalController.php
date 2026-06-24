@@ -51,7 +51,7 @@ class RentalController extends Controller
 
         Rental::create($validated);
 
-        return redirect()->route('admin.rentals.index')->with('success', 'Rental created successfully.');
+        return redirect()->route('admin.rental.index')->with('success', 'Rental created successfully.');
     }
 
     /**
