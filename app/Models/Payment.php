@@ -9,4 +9,16 @@ class Payment extends Model
 {
     /** @use HasFactory<\Database\Factories\PaymentFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'rental_id',
+        'amount',
+        'payment_method',
+        'proof_of_payment',
+    ];
+
+    public function rental()
+    {
+        return $this->belongsTo(Rental::class);
+    }
 }

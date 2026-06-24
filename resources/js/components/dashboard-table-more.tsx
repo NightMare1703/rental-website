@@ -13,7 +13,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { DialogEditCustomer } from "./dialog-edit-customer"
+// import { DialogEditCustomer } from "./dialog-edit-customer"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 
 export function DashboardTableMore() {
@@ -32,12 +32,12 @@ export function DashboardTableMore() {
                             Lihat
                         </DropdownMenuItem>
                     </DialogTrigger>
-                    <DialogEditCustomer>
-                        <DropdownMenuItem>
-                            <EditIcon />
-                            Edit
-                        </DropdownMenuItem>
-                    </DialogEditCustomer>
+                    {/* <DialogEditCustomer> */}
+                    <DropdownMenuItem>
+                        <EditIcon />
+                        Edit
+                    </DropdownMenuItem>
+                    {/* </DialogEditCustomer> */}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">
                         <Trash />

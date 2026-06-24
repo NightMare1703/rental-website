@@ -14,12 +14,13 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
 
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
-            <SidebarMenu>
+            <SidebarGroupLabel>Menu</SidebarGroupLabel>
+            <SidebarMenu className='gap-1'>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
                             asChild
+                            className="data-[active=true]:bg-primary data-[active=true]:text-white hover:bg-primary/30"
                             isActive={isCurrentUrl(item.href)}
                             tooltip={{ children: item.title }}
                         >

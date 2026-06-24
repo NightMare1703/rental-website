@@ -15,11 +15,24 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
+
+            // tanggal sewa
             $table->date('start_date');
             $table->date('end_date');
-            $table->decimal('total_price', 8, 2);
-            $table->enum('status', ['pending', 'approved', 'actived', 'completed', 'rejected'])->default('pending');
+
+            // Hitung otomatis
+            $table->decimal('total_price', 10, 2);
+            $table->decimal('price_per_day', 10, 2);
+            $table->integer('total_days');
+
+            // Status
+            $table->enum('status', ['pending', 'approved', 'ongoing', 'completed', 'rejected', 'cancled'])->default('pending');
+
+            // Catatan opsional
+            $table->text('notes')->nullable();
+
+            // Jika ada admin yang input
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }
