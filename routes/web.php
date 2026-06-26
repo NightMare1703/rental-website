@@ -28,7 +28,6 @@ Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.'
     Route::resource('rental', AdminRentalController::class);
 });
 
-
 // Route khusus user
 Route::middleware(['auth', 'verified', 'redirectAdmin'])->group(function () {
 

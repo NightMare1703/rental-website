@@ -13,7 +13,7 @@ class StoreItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user() && Auth::user()->role === 'admin';
+        return Auth::user() && Auth::user()->isAdmin();
     }
 
     /**

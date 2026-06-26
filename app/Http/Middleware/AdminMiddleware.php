@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         // Tolak akses user yang belum login & bukan admin
-        if (!$request->user() && !$request->user()->isAdmin()) {
+        if (!$request->user() || !$request->user()->isAdmin()) {
             abort(403, 'Akses ditolak.');
         }
         return $next($request);
