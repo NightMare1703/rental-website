@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react"
+import { Link, useForm } from "@inertiajs/react"
 import {
     EditIcon,
     EyeIcon,
@@ -29,15 +29,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import type { Category } from "@/types/category"
+// import type { Category } from "@/types/category"
 import type { Item } from "@/types/item"
-import EditItem from "./edit-item"
+// import EditItem from "./edit-item"
 
-export function ActionItem({ item, categories }: { item: Item, categories: Category[] }) {
+
+export function ActionItem({ item }: { item: Item }) {
     const { delete: destroyRequest } = useForm()
 
     const [isAlertOpen, setIsAlertOpen] = useState(false)
-    const [isEditItemOpen, setIsEditItemOpen] = useState(false)
+    // const [isEditItemOpen, setIsEditItemOpen] = useState(false)
 
     const handleDelete = (itemId: number) => {
         destroyRequest(route('admin.item.destroy', itemId))
@@ -60,9 +61,11 @@ export function ActionItem({ item, categories }: { item: Item, categories: Categ
                             </DropdownMenuItem>
                         </DialogTrigger>
                         {/* <DialogEditCustomer> */}
-                        <DropdownMenuItem onSelect={() => setIsEditItemOpen(true)} className="focus:bg-primary">
-                            <EditIcon />
-                            Edit
+                        <DropdownMenuItem asChild className="focus:bg-primary">
+                            <Link href={route('admin.item.edit', item.id)}>
+                                <EditIcon />
+                                Edit
+                            </Link>
                         </DropdownMenuItem>
                         {/* </DialogEditCustomer> */}
                         <DropdownMenuSeparator />
@@ -93,12 +96,12 @@ export function ActionItem({ item, categories }: { item: Item, categories: Categ
                 </AlertDialogContent>
             </AlertDialog>
 
-            <EditItem
+            {/* <EditItem
                 categories={categories}
                 item={item}
                 open={isEditItemOpen}
                 setOpen={setIsEditItemOpen}
-            />
+            /> */}
         </>
     )
 }

@@ -15,9 +15,9 @@ import type { Category } from '@/types/category';
 import type { Item } from '@/types/item';
 
 export default function Item({
-    items, categories, showCreateCategoryModal
+    items, categories
 }: {
-    items: Item[]; categories: Category[]; showCreateCategoryModal: boolean
+    items: Item[]; categories: Category[]
 }) {
     const { flash } = usePage();
 
@@ -43,10 +43,12 @@ export default function Item({
         router.get(route('admin.item.index'), { category: categoryFilters }, { preserveState: true, replace: true, preserveScroll: true })
     }, [categoryFilters])
 
+    const [openCreateCategory, setOpenCreateCategory] = useState(false)
+
     return (
         <>
+            <Head title="Item" />
             {flash.message && <div className='toast hidden'>{toast.success(`${flash.message}`, { position: 'top-center' })}</div>}
-            <Head title="Items" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
 
                 {/* Summary */}
@@ -142,11 +144,11 @@ export default function Item({
                                 <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border p-3">
                                     <h1 className='font-bold text-xl my-1'>Categories</h1>
                                     {/* Tambah category */}
-                                    <Button className="text-center p-0 mb-2 hover:cursor-pointer" asChild>
-                                        <Link href={route('admin.category.create')} preserveState className="w-full px-4 py-2 flex justify-center items-center gap-1">
-                                            <Plus />
-                                            Tambah Kategori
-                                        </Link>
+                                    <Button onClick={() => setOpenCreateCategory(true)} className="text-center p-0 mb-2 hover:cursor-pointer w-full px-4 py-2 flex justify-center items-center gap-1">
+                                        {/* <Link href={route('admin.category.create')} preserveState className="w-full px-4 py-2 flex justify-center items-center gap-1"> */}
+                                        <Plus />
+                                        Tambah Kategori
+                                        {/* </Link> */}
                                     </Button>
                                     <ScrollArea className="h-100 w-full rounded-md border">
                                         <CategoriesTable categories={categories} />
@@ -166,8 +168,25 @@ export default function Item({
                 </div >
             </div >
 
-            <CreateCategory showCreateCategoryModal={showCreateCategoryModal} />
+            <CreateCategory
+                open={openCreateCategory}
+                onOpenChange={setOpenCreateCategory}
+            />
+            {/* <EditCategory
+                category={category}
+                open={isEditOpen}
+                onOpenChange={setIsEditOpen}
+            /> */}
             {/* <CreateItem showCreateItemModal={showCreateItemModal} categories={categories} /> */}
         </>
     );
 }
+
+Item.layout = {
+    breadcrumbs: [
+        {
+            title: 'Item',
+            href: route('admin.item.index'),
+        },
+    ],
+};

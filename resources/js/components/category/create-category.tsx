@@ -1,4 +1,5 @@
 import { router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -10,14 +11,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export default function CreateCategory({ showCreateCategoryModal }: { showCreateCategoryModal: boolean }) {
+export default function CreateCategory({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
 
-    const closeCreateCategory = () => {
-        router.get(route('admin.item.index'), {}, {
-            preserveState: true,
-            preserveScroll: true,
-        })
-    }
+    // const closeCreateCategory = () => {
+    //     router.get(route('admin.item.index'), {}, {
+    //         preserveState: true,
+    //         preserveScroll: true,
+    //     })
+    // }
 
     // Generate slug from name
     const generateSlug = (name: string) => {
@@ -35,12 +36,12 @@ export default function CreateCategory({ showCreateCategoryModal }: { showCreate
     const save = (e: React.FormEvent) => {
         e.preventDefault()
         post(route('admin.category.store'), {
-            onSuccess: () => closeCreateCategory()
+            onSuccess: () => onOpenChange(false),
         })
     }
 
     return (
-        <Dialog open={showCreateCategoryModal} onOpenChange={(open) => !open && closeCreateCategory()}>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Tambah Kategori</DialogTitle>

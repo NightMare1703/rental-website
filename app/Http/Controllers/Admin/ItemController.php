@@ -16,22 +16,26 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
+        $query = Item::query()->with('images')->with('category');
 
         $categories = Category::all();
 
-        $categoryId = $request->input('category');
-        $search = $request->input('search');
-        $items = Item::query()->with('images')->with('category')->when($categoryId, function ($query) use ($categoryId) {
-            $query->where('category_id', $categoryId);
-        })->when($search, function ($query) use ($search) {
-            $query->where('name', 'like', "%{$search}%");
-        })->get();
+        if ($request->input('category')) {
+            $categoryId = $request->input('category');
+            $query =  $query->where('category_id', $categoryId);
+        }
 
-        return Inertia::render('admin/item', [
+        if ($request->input('search')) {
+            $search = $request->input('search');
+            $query =  $query->where('name', 'like', "%{$search}%");
+        }
+        $items = $query->get();
+
+        return Inertia::render('admin/item/item', [
             'items' => $items,
             'categories' => $categories,
             'showCreateCategoryModal' => false,
-            'showCreateItemModal' => false,
+            // 'showCreateItemModal' => false,
         ]);
     }
 
@@ -113,10 +117,11 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
+        $item = Item::findOrFail($item->id)->load(['category', 'images']);
         $categories = Category::all();
 
-        return Inertia::render('admin/item', [
-            'item' => $item->load(['category', 'images']),
+        return Inertia::render('admin/item/edit-item', [
+            'item' => $item,
             'categories' => $categories,
         ]);
     }

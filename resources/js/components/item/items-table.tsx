@@ -10,7 +10,7 @@ import type { Category } from "@/types/category"
 import type { Item } from "@/types/item"
 import { ActionItem } from "./action-item"
 
-export function ItemsTable({ items, categories }: { items: Item[], categories: Category[] }) {
+export function ItemsTable({ items }: { items: Item[], categories: Category[] }) {
     const formatPrice = (price: number) => {
         return price.toLocaleString('id-ID', {
             style: 'currency',
@@ -53,7 +53,7 @@ export function ItemsTable({ items, categories }: { items: Item[], categories: C
                         <TableCell>{item.stock} unit</TableCell>
                         <TableCell>{formatPrice(item.price_per_day)}</TableCell>
                         <TableCell className="text-right">
-                            <ActionItem categories={categories} item={item} />
+                            <ActionItem item={item} />
                         </TableCell>
                     </TableRow>
                 ))}

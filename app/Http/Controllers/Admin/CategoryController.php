@@ -25,10 +25,10 @@ class CategoryController extends Controller
     {
         $items = Item::with('images')->latest()->get();
         $categories = Category::all();
-        return Inertia::render('admin/item', [
+        return Inertia::render('admin/item/item', [
             'items' => $items,
             'categories' => $categories,
-            'showCreateCategoryModal' => true,
+            // 'showCreateCategoryModal' => true,
         ]);
     }
 
@@ -65,7 +65,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('admin/item', [
+        return Inertia::render('admin/item/item', [
             'category' => $category,
         ]);
     }
