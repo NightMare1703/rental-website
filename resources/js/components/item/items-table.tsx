@@ -24,9 +24,9 @@ export function ItemsTable({ items, categories }: { items: Item[], categories: C
                 <TableRow>
                     <TableHead className="font-bold">No</TableHead>
                     <TableHead className="font-bold">FOTO</TableHead>
-                    <TableHead className="font-bold">STOK</TableHead>
                     <TableHead className="font-bold">NAMA</TableHead>
                     <TableHead className="font-bold">KATEGORI</TableHead>
+                    <TableHead className="font-bold">STOK</TableHead>
                     <TableHead className="font-bold">HARGA PERHARI</TableHead>
                     <TableHead className="font-bold text-right">AKSI</TableHead>
                 </TableRow>
@@ -46,11 +46,11 @@ export function ItemsTable({ items, categories }: { items: Item[], categories: C
                                 className="object-cover w-15 h-15 rounded-md" />
                             {/* } */}
                         </TableCell>
-                        <TableCell>{item.stock}</TableCell>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>
                             {item.category?.name || 'Tidak diketahui'}
                         </TableCell>
+                        <TableCell>{item.stock} unit</TableCell>
                         <TableCell>{formatPrice(item.price_per_day)}</TableCell>
                         <TableCell className="text-right">
                             <ActionItem categories={categories} item={item} />

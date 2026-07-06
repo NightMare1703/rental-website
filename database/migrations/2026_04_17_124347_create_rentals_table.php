@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('total_days');
 
             // Status
-            $table->enum('status', ['pending', 'approved', 'ongoing', 'completed', 'rejected', 'canclled'])->default('pending');
+            $table->enum('status', ['ditunda', 'disetujui', 'berjalan', 'selesai', 'ditolak', 'dibatalkan'])->default('ditunda');
 
             // Catatan opsional
             $table->text('notes')->nullable();

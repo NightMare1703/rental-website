@@ -42,7 +42,7 @@ Dashboard.layout = {
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: route('dashboard'),
+            href: route('admin.dashboard'),
         },
     ],
 };

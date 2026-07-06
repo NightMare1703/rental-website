@@ -45,8 +45,8 @@ export default function Item({
 
     return (
         <>
-            <Head title="Item" />
             {flash.message && <div className='toast hidden'>{toast.success(`${flash.message}`, { position: 'top-center' })}</div>}
+            <Head title="Items" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
 
                 {/* Summary */}
@@ -171,12 +171,3 @@ export default function Item({
         </>
     );
 }
-
-Item.layout = {
-    breadcrumbs: [
-        {
-            title: 'Item',
-            href: route('admin.item.index'),
-        },
-    ],
-};

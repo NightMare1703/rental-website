@@ -14,10 +14,19 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::with('images')->with('category')->latest()->get();
-        $categories = Category::latest('id')->get();
+
+        $categories = Category::all();
+
+        $categoryId = $request->input('category');
+        $search = $request->input('search');
+        $items = Item::query()->with('images')->with('category')->when($categoryId, function ($query) use ($categoryId) {
+            $query->where('category_id', $categoryId);
+        })->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        })->get();
+
         return Inertia::render('admin/item', [
             'items' => $items,
             'categories' => $categories,
@@ -31,14 +40,14 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $items = Item::with('images')->latest()->get();
+        $items = Item::with('images')->with('category')->latest()->get();
         $categories = Category::all();
         return inertia(
-            'admin/item',
+            'admin/item/create-item',
             [
                 'items' => $items,
                 'categories' => $categories,
-                'showCreateItemModal' => true,
+                // 'showCreateItemModal' => true,
             ]
         );
     }
@@ -54,7 +63,7 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'price_per_day' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'images' => 'nullable|array|max:5',
+            'images' => 'required|nullable|array|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'category_id.required' => 'Kategori wajib dipilih.',
@@ -69,6 +78,7 @@ class ItemController extends Controller
             'stock.required' => 'Stok wajib diisi.',
             'stock.integer' => 'Stok harus berupa angka bulat.',
             'stock.min' => 'Stok tidak boleh kurang dari 0.',
+            'images.required' => 'Gambar item wajib ada.',
             'images.*.image' => 'File yang diunggah harus berupa gambar.',
             'images.*.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, gif, svg.',
             'images.*.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',

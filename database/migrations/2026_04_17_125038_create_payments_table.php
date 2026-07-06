@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('amount');
             $table->string('payment_method');
             $table->string('proof_of_payment');
-            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
+            $table->enum('status', ['ditunda', 'disetujui', 'ditolak'])->default('ditunda');
             $table->timestamps();
         });
     }

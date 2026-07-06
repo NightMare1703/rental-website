@@ -1,3 +1,4 @@
+import { ActionCategories } from "@/components/category/action-categories"
 import {
     Table,
     TableBody,
@@ -6,7 +7,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { ActionCategories } from "@/components/category/action-categories"
 import type { Category } from "@/types/category"
 
 const CategoriesTable = ({ categories }: { categories: Category[] }) => {
