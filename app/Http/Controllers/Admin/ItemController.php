@@ -16,24 +16,20 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Item::query()->with('images')->with('category');
 
-        $categories = Category::all();
-
-        if ($request->input('category')) {
-            $categoryId = $request->input('category');
-            $query =  $query->where('category_id', $categoryId);
-        }
-
-        if ($request->input('search')) {
-            $search = $request->input('search');
-            $query =  $query->where('name', 'like', "%{$search}%");
-        }
-        $items = $query->get();
+        $items = Item::query()->with(['images', 'category'])
+            // query search
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('name', 'like', '%' . $search . '%');
+                // query category
+            })->when($request->input('category'), function ($query, $categoryId) {
+                $query->where('category_id', $categoryId);
+            })->paginate(10)->withQueryString();
+        // })->get();
 
         return Inertia::render('admin/item/item', [
             'items' => $items,
-            'categories' => $categories,
+            'categories' => Category::all(),
             'showCreateCategoryModal' => false,
             // 'showCreateItemModal' => false,
         ]);

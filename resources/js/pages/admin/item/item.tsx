@@ -1,47 +1,49 @@
 import { Head, router, usePage } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import { Package, Plus, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import CategoriesTable from '@/components/category/categories-table';
 import CreateCategory from '@/components/category/create-category';
-// import CreateItem from '@/components/item/create-item';
 import { ItemsTable } from '@/components/item/items-table';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+// import type { PaginatorItem } from '@/types/paginatorItem';
 import type { Category } from '@/types/category';
 import type { Item } from '@/types/item';
+import type { PaginatorItem } from '@/types/paginatorItem';
 
 export default function Item({
     items, categories
 }: {
-    items: Item[]; categories: Category[]
+    items: PaginatorItem; categories: Category[]
 }) {
     const { flash } = usePage();
 
     const [searchItem, setSearchItem] = useState('')
     const [categoryFilters, setCategoryFilters] = useState('')
+    const isFirstRender = useRef(true); // Referensi untuk mendeteksi render pertama kali
 
     // Referensi untuk mendeteksi render pertama kali
 
     // request to server when searchItem change
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false; // Setel referensi ke false setelah render pertama kali
+
+            return // Jangan lakukan request pada render pertama kali
+        }
 
         const delayDebaunce = setTimeout(() => {
-            router.get(route('admin.item.index'), { search: searchItem }, { preserveState: true, replace: true, preserveScroll: true })
+            router.get(route('admin.item.index'),
+                { search: searchItem, category: categoryFilters },
+                { preserveState: true, replace: true, preserveScroll: true, only: ['items'] })
         }, 300)
 
         return () => clearTimeout(delayDebaunce)
-    }, [searchItem])
-
-    // request to server when categoryFilters change
-    useEffect(() => {
-
-
-        router.get(route('admin.item.index'), { category: categoryFilters }, { preserveState: true, replace: true, preserveScroll: true })
-    }, [categoryFilters])
+    }, [searchItem, categoryFilters])
 
     const [openCreateCategory, setOpenCreateCategory] = useState(false)
 
@@ -60,7 +62,7 @@ export default function Item({
                         </div>
                         <div>
                             <h1 className='font-bold text-left text-2xl'>Total Item</h1>
-                            <p className='font-bold text-left text-4xl'>{items.length}</p>
+                            <p className='font-bold text-left text-4xl'>{items.data.length}</p>
                         </div>
                     </div>
                     <div className="flex h-30 w-full justify-center items-center gap-4 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
@@ -70,7 +72,7 @@ export default function Item({
                         </div>
                         <div>
                             <h1 className='font-bold text-left text-2xl'>Tersedia</h1>
-                            <p className='font-bold text-left text-4xl'>{items.length}</p>
+                            <p className='font-bold text-left text-4xl'>{items.data.length}</p>
                         </div>
                     </div>
                     <div className="flex h-30 w-full justify-center items-center gap-4 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
@@ -80,7 +82,7 @@ export default function Item({
                         </div>
                         <div>
                             <h1 className='font-bold text-left text-2xl'>Sedang Disewa</h1>
-                            <p className='font-bold text-left text-4xl'>{items.length}</p>
+                            <p className='font-bold text-left text-4xl'>{items.data.length}</p>
                         </div>
                     </div>
                     <div className="flex h-30 w-full justify-center items-center gap-4 relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
@@ -134,7 +136,7 @@ export default function Item({
                         {/* Tambah category */}
                         <Dialog>
                             <DialogTrigger>
-                                <Button className="text-center mb-2 hover:cursor-pointer">
+                                <Button asChild className="text-center mb-2 hover:cursor-pointer">
                                     Kelola Kategori
                                 </Button>
                             </DialogTrigger>
@@ -164,7 +166,7 @@ export default function Item({
                 {/* Tabel Kategori */}
                 <div className=" h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-2">
                     <h1 className='font-bold text-xl my-1'>Tabel Item</h1>
-                    <ItemsTable categories={categories} items={items} />
+                    <ItemsTable items={items} />
                 </div >
             </div >
 
@@ -172,12 +174,6 @@ export default function Item({
                 open={openCreateCategory}
                 onOpenChange={setOpenCreateCategory}
             />
-            {/* <EditCategory
-                category={category}
-                open={isEditOpen}
-                onOpenChange={setIsEditOpen}
-            /> */}
-            {/* <CreateItem showCreateItemModal={showCreateItemModal} categories={categories} /> */}
         </>
     );
 }
