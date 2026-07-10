@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import CategoriesTable from '@/components/category/categories-table';
 import CreateCategory from '@/components/category/create-category';
 import { ItemsTable } from '@/components/item/items-table';
+import PaginationItems from '@/components/item/pagination-items';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -135,8 +136,8 @@ export default function Item({
                         ))}
                         {/* Tambah category */}
                         <Dialog>
-                            <DialogTrigger>
-                                <Button asChild className="text-center mb-2 hover:cursor-pointer">
+                            <DialogTrigger asChild>
+                                <Button className="text-center mb-2 hover:cursor-pointer">
                                     Kelola Kategori
                                 </Button>
                             </DialogTrigger>
@@ -168,7 +169,9 @@ export default function Item({
                     <h1 className='font-bold text-xl my-1'>Tabel Item</h1>
                     <ItemsTable items={items} />
                 </div >
+                <PaginationItems items={items} />
             </div >
+
 
             <CreateCategory
                 open={openCreateCategory}

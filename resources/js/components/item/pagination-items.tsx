@@ -10,27 +10,21 @@ import {
 } from "../ui/pagination";
 
 export default function PaginationItems({ items }: { items: PaginatorItem }) {
-    console.log(items.links)
+    console.log(items)
 
     return (
         <Pagination>
             {items.links.map((link, index) => (
                 <PaginationContent>
                     <PaginationItem key={index}>
-                        {link.label === '&laquo; Previous' ? (
-                            <PaginationPrevious href={link.url || '#'} />
-                        ) : link.label === 'Next &raquo;' ? (
-                            <PaginationNext href={link.url || '#'} />
-                        ) : link.label === '...' ? (
-                            <PaginationEllipsis />
-                        ) : (
-                            <PaginationLink
-                                href={link.url || '#'}
-                                isActive={link.active}
-                            >
-                                {link.label}
-                            </PaginationLink>
-                        )}
+                        {link.label === '&laquo; Previous' ?
+                            link.url &&
+                            <PaginationPrevious href={link.url} /> :
+                            link.label === 'Next &raquo;' ?
+                                link.url &&
+                                <PaginationNext href={link.url} /> :
+                                link.label === '...' ? <PaginationEllipsis /> :
+                                    <PaginationLink isActive={link.active} href={link.url}>{link.label}</PaginationLink>}
                     </PaginationItem>
                 </PaginationContent>
             ))}

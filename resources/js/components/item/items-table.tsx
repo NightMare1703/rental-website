@@ -10,7 +10,6 @@ import {
 // import type { Item } from "@/types/item"
 import type { PaginatorItem } from "@/types/paginatorItem"
 import { ActionItem } from "./action-item"
-import PaginationItems from "./pagination-items"
 
 export function ItemsTable({ items }: { items: PaginatorItem }) {
     const formatPrice = (price: number) => {
@@ -64,7 +63,6 @@ export function ItemsTable({ items }: { items: PaginatorItem }) {
                     ))}
                 </TableBody>
             </Table>
-            <PaginationItems items={items} />
         </>
     )
 }
