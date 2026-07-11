@@ -24,7 +24,7 @@ class ItemController extends Controller
                 // query category
             })->when($request->input('category'), function ($query, $categoryId) {
                 $query->where('category_id', $categoryId);
-            })->paginate(3)->withQueryString();
+            })->paginate(10)->withQueryString();
         // })->get();
 
         return Inertia::render('admin/item/item', [

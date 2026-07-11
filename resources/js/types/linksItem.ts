@@ -1,6 +1,6 @@
 export type LinksItem = {
     url: string | undefined;
     label: string;
-    page: number | null;
+    page: number;
     active: boolean;
 };
