@@ -18,9 +18,9 @@ class RentalController extends Controller
     {
         $rentals = Rental::with(['user', 'item', 'payment'])->latest()->get();
 
-        return Inertia::render('admin/rental', [
+        return Inertia::render('admin/rental/rental', [
             'rentals' => $rentals,
-            'showCreateRentalModal' => false
+            // 'showCreateRentalModal' => false
         ]);
     }
 
@@ -29,7 +29,7 @@ class RentalController extends Controller
      */
     public function create()
     {
-        return Inertia::render('admin/rental', [
+        return Inertia::render('admin/rental/create-rental', [
             'showCreateRentalModal' => true,
             'items' => Item::with(['images', 'category'])->latest()->get()
         ]);

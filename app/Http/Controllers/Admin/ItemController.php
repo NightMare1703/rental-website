@@ -40,7 +40,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $items = Item::with('images')->with('category')->latest()->get();
+        $items = Item::with('images')->with(relations: 'category')->latest()->get();
         $categories = Category::all();
         return inertia(
             'admin/item/create-item',

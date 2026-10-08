@@ -172,7 +172,6 @@ export default function Item({
                 <PaginationItems items={items} />
             </div >
 
-
             <CreateCategory
                 open={openCreateCategory}
                 onOpenChange={setOpenCreateCategory}

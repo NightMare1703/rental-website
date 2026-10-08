@@ -12,11 +12,6 @@ import {
 
 export default function PaginationItems({ items }: { items: PaginatorItem }) {
 
-    // const [nextPage, setNextPage] = React.useState<string | null>(items.current_page + 1);
-    // const [prevPage, setPrevPage] = React.useState<string | null>(items.current_page - 1);
-
-    console.log(items);
-
     return (
         <div>
             <Pagination>

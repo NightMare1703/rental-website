@@ -47,11 +47,11 @@ export default function Rental({ rentals, items, showCreateRentalModal }
     );
 }
 
-// Customers.layout = {
-//     breadcrumbs: [
-//         {
-//             title: 'Customers',
-//             href: customers(),
-//         },
-//     ],
-// };
+Rental.layout = {
+    breadcrumbs: [
+        {
+            title: 'Rental',
+            href: route('admin.rental.index'),
+        },
+    ],
+};
